@@ -87,7 +87,7 @@ public class WiFiDirectMainActivity extends Activity implements
     private String                   mPort;
     private String                   mIP;
     private Handler                  mHandler               = new Handler();
-    private static final int         MAX_DELAY_MS           = 500;
+    private static final int         MAX_DELAY_MS           = 3000;
     private static final int DIALOG_RENAME = 3;
     private final IntentFilter       intentFilter           = new IntentFilter();
     private Channel                  channel;
@@ -129,6 +129,8 @@ public class WiFiDirectMainActivity extends Activity implements
         mConnectDesc = (TextView) findViewById(R.id.show_connect_desc);
         mConnectWarn = (TextView) findViewById(R.id.show_desc_more);
         mClick2Settings = (Button) findViewById(R.id.settings_btn);
+        mConnectDesc.setFocusable(true);
+        mConnectDesc.requestFocus();
         mClick2Settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +143,7 @@ public class WiFiDirectMainActivity extends Activity implements
                         .getString(R.string.p2p_off_warning));
             mConnectWarn.setVisibility(View.VISIBLE);
             mClick2Settings.setVisibility(View.VISIBLE);
+            mConnectDesc.setFocusable(false);
         }
         mDeviceNameShow = (TextView) findViewById(R.id.device_dec);
         mDeviceTitle = (TextView) findViewById(R.id.device_title);
@@ -175,6 +178,7 @@ public class WiFiDirectMainActivity extends Activity implements
                 mConnectWarn.setText(WiFiDirectMainActivity.this.getResources()
                         .getString(R.string.p2p_off_warning));
                 mClick2Settings.setVisibility(View.VISIBLE);
+                mConnectDesc.setFocusable(false);
             }
             return;
         }
@@ -243,12 +247,14 @@ public class WiFiDirectMainActivity extends Activity implements
             mConnectDesc.setText(getString(R.string.connect_ready));
             mConnectWarn.setVisibility(View.INVISIBLE);
             mClick2Settings.setVisibility(View.GONE);
+            mConnectDesc.setFocusable(false);
         } else {
             mConnectDesc.setText(getString(R.string.connect_not_ready));
             mConnectWarn.setText(WiFiDirectMainActivity.this.getResources()
                         .getString(R.string.p2p_off_warning));
             mConnectWarn.setVisibility(View.VISIBLE);
             mClick2Settings.setVisibility(View.VISIBLE);
+            mConnectDesc.setFocusable(true);
         }
     }
 
